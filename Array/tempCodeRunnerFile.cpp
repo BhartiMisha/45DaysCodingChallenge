@@ -1,30 +1,18 @@
-bool set = true;
-    for (int i = 0; i < v.size(); i++)
+unordered_map<int, int> m;
+    vector<int> res;
+
+    for(int i = 0; i < v.size(); i++)
     {
-        if (v[i][0] == 0)
-            set = false;
-        for (int j = 0; j < v[i].size(); j++)
+        int complement = target - v[i];
+        if(m.find(complement) != m.end())
         {
-            if (v[i][j] == 0)
-            {
-                v[0][j] = 0;
-                v[i][0] = 0;
-            }
+            res.push_back(m[complement]);
+            res.push_back(i);
+            break;
+        }
+        else
+        {
+            m.insert(make_pair(v[i], i));
         }
     }
-
-    int rows = v.size();
-    int cols = v[0].size();
-
-    for (int i = rows - 1; i >= 0; i--)
-    {
-        for (int j = cols - 1; j >= 1; j--)
-        {
-            if (v[i][0] == 0 || v[0][j] == 0)
-            {
-                v[i][j] = 0;
-            }
-        }
-        if (set == false)
-            v[i][0] = 0;
-    }
+    return res;
